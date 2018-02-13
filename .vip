@@ -1,0 +1,22 @@
+(defun vip-mode ()
+  (vip-change-mode-to-vi)
+  (run-hooks 'vip-mode-hook))
+
+(global-set-key "\C-k" 'dabbrev-expand)
+(define-key vip-mode-map "q" 'vip-substitute)
+(define-key vip-mode-map "U" 'vip-change-to-eol)
+(define-key vip-mode-map "[" 'beginning-of-buffer)
+(define-key vip-mode-map "]" 'end-of-buffer)
+
+(define-key vip-mode-map "s" 'switch-to-buffer)
+(define-key vip-mode-map "S" 'switch-to-buffer-other-window)
+
+(setq vip-case-fold-search t)
+(setq vip-help-in-insert t)
+
+(setq vip-inhibit-startup-message t)
+
+(setq vip-mode-hook
+      '(lambda ()
+         (auto-fill-mode 1)
+         ))
