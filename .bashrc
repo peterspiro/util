@@ -280,3 +280,8 @@ alias pylint_no_todo='pylint -d W0511 --msg-template "{msg_id}:{line:3d},{column
 alias nose='nosetests omicia_pipeline integration_tests'
 alias noseq='nosetests omicia_pipeline integration_tests 2>&1 |grep -v "^omicia_pipeline"'
 alias nosevq='nosetests omicia_pipeline integration_tests 2>&1 |egrep -v "^([a-z =>]|[A-Z][a-z]|$|\-)"'
+
+# ls with colors!
+
+export CLICOLOR=1
+export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
