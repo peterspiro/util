@@ -1,0 +1,73 @@
+[user]
+        email = pspiro@omicia.com
+        name = Peter Spiro
+[color]
+        ui = auto
+[core]
+        autocrlf = false
+        editor = emacs
+        quotepath = false
+        excludesfile = /Users/pspiro/.gitignore_global
+[merge]
+        tool = opendiff
+[alias]
+    lg = log --graph --pretty=oneline --abbrev-commit --decorate
+    tagcommit = !sh -c 'git rev-list $0 | head -n 1'
+[mergetool "diffmerge"]
+        cmd = diffmerge --merge --result=$MERGED $LOCAL $BASE $REMOTE
+        trustExitCode = false
+[push]
+        default = simple
+[pull]
+        default = simple
+[difftool "sourcetree"]
+        cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+        path =
+[mergetool "sourcetree"]
+        cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+        trustExitCode = true
+# https://git.wiki.kernel.org/index.php/Aliases
+[alias]
+    st = status
+    ci = commit
+    br = branch
+    co = checkout
+    df = diff
+    dc = diff --cached
+    co = checkout
+    df = diff
+    dc = diff --cached
+    lgp = log -p
+    lg = log
+    who = shortlog -s --
+    changes=diff --name-status -r
+    diffstat=diff --stat
+    ds = diff --stat
+# To see what new commits have been created by the last command (typically after a "git pull") :
+    new = !sh -c 'git log $1@{1}..$1@{0} "$@"'
+    whois = "!sh -c 'git log -i -1 --pretty=\"format:%an <%ae>\n\" --author=\"$1\"' -"
+    whatis = show -s --pretty='tformat:%h (%s, %ad)' --date=short
+    lggl = log --graph --pretty=format:'%Cred%H%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lgg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+# If you want to be able to say git lc to list all new commits after you fetched, with stats, but excluding merges, add this alias:
+    lc = log ORIG_HEAD.. --stat --no-merges
+# Now that you know all about aliases, it might be handy to define some, using an alias:
+    alias = "!sh -c '[ $# = 2 ] && git config --global alias.\"$1\" \"$2\" && exit 0 || echo \"usage: git alias <new alias> <original command>\" >&2 && exit 1' -"
+# Going further, to get a list of your defined aliases:
+    aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+
+    lgs = log --stat
+    dcs = diff --cached --stat
+    dfw = diff --word-diff
+    dfc = diff --word-diff-regex=.
+    dcc = diff --cached --word-diff-regex=.
+    dcw = diff --cached --word-diff
+    lgc = log -p --word-diff-regex=.
+    lgw = log -p --word-diff
+
+# if you use less as default pager just type -S while viewing the diff to reenable wrapping in less
+
+# http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
+    brecent = for-each-ref --count=20 --sort=-committerdate refs/heads/ --format='%(committerdate:short)    %(author)%09%09%(refname:short)'
+    rbrecent = for-each-ref --count=20 --sort=-committerdate refs/remotes/ --format='%(committerdate:short)    %(author)%09%09%(refname:short)'
+
