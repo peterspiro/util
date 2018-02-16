@@ -1,6 +1,3 @@
-UTIL_DIR=$(dirname $BASH_SOURCE)
-export UTIL_DIR
-
 if [ -f $UTIL_DIR/.bashrc ]; then
    source $UTIL_DIR/.bashrc
 fi
