@@ -1,5 +1,5 @@
-if [ -f $UTIL_DIR/.bashrc ]; then
-   source $UTIL_DIR/.bashrc
+if [ -f ~/util/.bashrc ]; then
+   source ~/util/.bashrc
 fi
 
 if [ -f ~/.bashrc ]; then
