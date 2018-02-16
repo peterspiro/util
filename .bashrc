@@ -252,7 +252,7 @@ function find_git_branch {
 BLACK='\[\e[0;30m\]'
 GREEN='\[\e[0;32m\]'
 
-source $UTIL_DIR/.bash_prompt
+source .bash_prompt
 
 
 # Show all git branches by last modified date
