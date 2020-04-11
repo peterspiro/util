@@ -3,6 +3,7 @@ export HISTCONTROL=ignoredups
 # ... and ignore same successive entries.
 #export HISTCONTROL=ignoreboth
 
+# https://github.com/bobthecow/git-flow-completion/wiki/Install-Bash-git-completion
 source /usr/local/etc/bash_completion.d/git-completion.bash
 
 set -o vi
@@ -285,3 +286,7 @@ alias nosevq='nosetests omicia_pipeline integration_tests 2>&1 |egrep -v "^([a-z
 
 export CLICOLOR=1
 export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
+
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
