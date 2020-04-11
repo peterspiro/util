@@ -3,6 +3,7 @@ export HISTCONTROL=ignoredups
 # ... and ignore same successive entries.
 #export HISTCONTROL=ignoreboth
 
+# https://github.com/bobthecow/git-flow-completion/wiki/Install-Bash-git-completion
 source /usr/local/etc/bash_completion.d/git-completion.bash
 
 set -o vi
