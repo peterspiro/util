@@ -3,8 +3,13 @@ export HISTCONTROL=ignoredups
 # ... and ignore same successive entries.
 #export HISTCONTROL=ignoreboth
 
-# https://github.com/bobthecow/git-flow-completion/wiki/Install-Bash-git-completion
-source /usr/local/etc/bash_completion.d/git-completion.bash
+# https://stackoverflow.com/questions/12399002/how-to-configure-git-bash-command-line-completion
+if [ -f /usr/local/share/bash-completion/bash_completion ]; then
+    . /usr/local/share/bash-completion/bash_completion
+fi
+if [ -f /etc/bash_completion.d/git ]; then
+    source /etc/bash_completion.d/git
+fi
 
 set -o vi
 set -o noclobber
