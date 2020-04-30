@@ -4,9 +4,8 @@ export HISTCONTROL=ignoredups
 #export HISTCONTROL=ignoreboth
 
 # https://stackoverflow.com/questions/12399002/how-to-configure-git-bash-command-line-completion
-if [ -f /usr/local/share/bash-completion/bash_completion ]; then
-    . /usr/local/share/bash-completion/bash_completion
-fi
+# https://github.com/bobthecow/git-flow-completion/wiki/Install-Bash-git-completion
+[ -f /usr/local/etc/bash_completion ] && . /usr/local/etc/bash_completion
 if [ -f /etc/bash_completion.d/git ]; then
     source /etc/bash_completion.d/git
 fi
