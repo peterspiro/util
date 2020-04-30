@@ -295,3 +295,7 @@ export LSCOLORS=gxBxhxDxfxhxhxhxhxcxcx
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
+
+if [ -f $HOME/.iterm2_shell_integration.bash ]; then
+  source $HOME/.iterm2_shell_integration.bash
+fi
