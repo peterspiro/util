@@ -68,9 +68,9 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
-	<string>400 334 799 448 0 0 1600 877 </string>
+	<string>560 473 799 448 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 555 665 502 0 0 1920 1057 </string>
+	<string>0 66 1920 991 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 71 1913 977 0 0 1920 1057 </string>
 	<key>New Bookmarks</key>
@@ -787,7 +787,7 @@
 					<key>partial</key>
 					<true/>
 					<key>regex</key>
-					<string>spiro@xserver.math.utah.edu's password:</string>
+					<string>^spiro@xserver.math.utah.edu's password:</string>
 				</dict>
 			</array>
 			<key>Unicode Normalization</key>
@@ -1436,7 +1436,7 @@
 	<key>NoSyncLastTipTime</key>
 	<real>612729998.97835398</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>6</integer>
+	<integer>9</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
