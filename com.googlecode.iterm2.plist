@@ -70,7 +70,7 @@
 	<key>NSWindow Frame NSNavPanelAutosaveName</key>
 	<string>400 334 799 448 0 0 1600 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 80 1920 977 0 0 1920 1057 </string>
+	<string>0 555 665 502 0 0 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>0 71 1913 977 0 0 1920 1057 </string>
 	<key>New Bookmarks</key>
@@ -779,6 +779,16 @@
 			<real>0.0</real>
 			<key>Triggers</key>
 			<array>
+				<dict>
+					<key>action</key>
+					<string>PasswordTrigger</string>
+					<key>parameter</key>
+					<string>Utah — spiro</string>
+					<key>partial</key>
+					<true/>
+					<key>regex</key>
+					<string>spiro@xserver.math.utah.edu's password:</string>
+				</dict>
 			</array>
 			<key>Unicode Normalization</key>
 			<integer>0</integer>
@@ -1401,12 +1411,19 @@
 	</array>
 	<key>NoSyncCommandHistoryHasEverBeenUsed</key>
 	<true/>
+	<key>NoSyncFrame_SessionsPreferences</key>
+	<dict>
+		<key>screenFrame</key>
+		<string>{{0, 0}, {1920, 1080}}</string>
+		<key>topLeft</key>
+		<string>{657, 937}</string>
+	</dict>
 	<key>NoSyncFrame_SharedPreferences</key>
 	<dict>
 		<key>screenFrame</key>
 		<string>{{0, 0}, {1920, 1080}}</string>
 		<key>topLeft</key>
-		<string>{379, 877}</string>
+		<string>{308, 911}</string>
 	</dict>
 	<key>NoSyncHaveUsedCopyMode</key>
 	<true/>
@@ -1417,9 +1434,9 @@
 	<key>NoSyncInstallationId</key>
 	<string>5EA7844E-0513-4E83-B9B1-7D50E71DC154</string>
 	<key>NoSyncLastTipTime</key>
-	<real>609554923.12920594</real>
+	<real>612729998.97835398</real>
 	<key>NoSyncLaunchExperienceControllerRunCount</key>
-	<integer>5</integer>
+	<integer>6</integer>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
@@ -2148,25 +2165,53 @@
 	<real>603849752.00817895</real>
 	<key>NoSyncTipsToNotShow</key>
 	<array>
-		<string>0004</string>
-		<string>0000</string>
-		<string>0010</string>
-		<string>0014</string>
-		<string>0007</string>
-		<string>0003</string>
+		<string>0017</string>
+		<string>0029</string>
+		<string>0001</string>
 		<string>0013</string>
-		<string>0016</string>
+		<string>0025</string>
+		<string>0037</string>
+		<string>0021</string>
+		<string>0033</string>
+		<string>0041</string>
 		<string>0006</string>
+		<string>0018</string>
 		<string>0002</string>
+		<string>0014</string>
+		<string>0026</string>
+		<string>0038</string>
+		<string>0010</string>
+		<string>0022</string>
 		<string>000</string>
+		<string>0034</string>
+		<string>0030</string>
+		<string>0042</string>
+		<string>0007</string>
+		<string>0019</string>
+		<string>0003</string>
+		<string>0015</string>
+		<string>0027</string>
+		<string>0039</string>
+		<string>0011</string>
+		<string>0023</string>
+		<string>0035</string>
+		<string>0031</string>
+		<string>0043</string>
+		<string>0008</string>
+		<string>0004</string>
+		<string>0016</string>
+		<string>0028</string>
+		<string>0000</string>
 		<string>0012</string>
+		<string>0024</string>
+		<string>0036</string>
+		<string>0020</string>
+		<string>0032</string>
+		<string>0044</string>
+		<string>0040</string>
 		<string>0009</string>
 		<string>0005</string>
-		<string>0001</string>
-		<string>0011</string>
-		<string>0015</string>
-		<string>0008</string>
-		<string>0017</string>
+		<string>0045</string>
 	</array>
 	<key>OpenBookmark</key>
 	<false/>
@@ -2214,7 +2259,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2020-04-25T17:14:04Z</date>
+	<date>2020-06-01T20:33:57Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
