@@ -1,4 +1,9 @@
-#!/usr/bin/env bash
+# Run with:
+# 	bash setup.sh
+
+set -x
+set -e
+
 
 UTIL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
