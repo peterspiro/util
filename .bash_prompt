@@ -98,24 +98,8 @@ prompt_command() {
   WORKING=$(parse_git_status_column 2 [A-Z])
   UNTRACKED=$(parse_git_status_column 1,2 ?)
   VIRT_ENV=$(parse_virtual_env)
-#  PS1="\[$BOLD\]$VIRT_ENV\w$BRANCH$ERRMSG \[$RESET\]\$ "
-#  PS1="$VIRT_ENV\w$BRANCH$ERRMSG \$ "
-
-##  PS1="\[$BOLD$CYAN\]$VIRT_ENV\[$BLUE\]\w\[$BASE0$YELLOW\]$BRANCH\[$BASE$GREEN\]$STAGED\[$BASE$ORANGE\]$WORKING\[$BASE$PURPLE\]$UNTRACKED\[$BASE0$RED\]$ERRMSG\[$BASE0\] \[$RESET\]\$ "
-
-#  PS1="\[$BOLD$CYAN\]$VIRT_ENV\[$BLUE\]\w\[$YELLOW\]$BRANCH\[$BASE$GREEN\]$STAGED\[$BASE$ORANGE\]$WORKING\[$BASE$PURPLE\]$UNTRACKED\[$RED\]$ERRMSG \[$RESET\]\$ "
-
-##  PS1="\[\]$VIRT_ENV\[\]\w\[\]$BRANCH\[\]$STAGED\[\]$WORKING\[$BASE$PURPLE\]$UNTRACKED\[$BASE0$RED\]$ERRMSG\[$BASE0\] \[$RESET\]\$ "
-#  PS1="\[${BOLD}\]\[$CYAN\]$VIRT_ENV\[$BLUE\]\w\[$BASE0\]\[$YELLOW\]$BRANCH\[$BASE0\]\[$RED\]$ERRMSG\[$BASE0\] \[$RESET\]\$ "
-#  PS1="\[${BOLD}\]\[$BLUE\]\w\[$BASE0\]\[$YELLOW\]$BRANCH\[$BASE0\]\[$RED\]$ERRMSG\[$BASE0\] \[$RESET\]\$ "
-#  PS1="\[${BOLD}\]\[$CYAN\]\h \[$BLUE\]\w\[$BASE0\]\[$YELLOW\]\$(parse_git_branch)\[$BASE0\]\[$RED\]$ERRMSG\[$BASE0\] \[$RESET\]\$ "
-
-# PS1="\[$green$bold\]\h\[$reset\]:\[$blue$bold\]\w\[$reset\]\$ "
 
   PS1="\[$BOLD$CYAN\]$VIRT_ENV\[$YELLOW\]$BRANCH \[$BLUE\]\w\[$GREEN\]$STAGED\[$ORANGE\]$WORKING\[$PINK\]$UNTRACKED\[$RED\]$ERRMSG \[$RESET\]\$ "
-#   PS1="\[$bold$cyan\]$VIRT_ENV\[$blue\]\w\[$yellow\]$BRANCH\[$green\]$STAGED\[$orange\]$WORKING\[$violet\]$UNTRACKED\[$red\]$ERRMSG \[$reset\]\$ "
-
-#  PS1="\[$cyan$bold\]$VIRT_ENV\[$blue\]\w\[$yellow\]$BRANCH\[$green\]$STAGED\[$orange\]$WORKING\[$violet\]$UNTRACKED\[$red\]$ERRMSG \[$reset\]\$ "
 }
 
 PROMPT_COMMAND=prompt_command
