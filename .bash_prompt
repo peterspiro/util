@@ -91,15 +91,32 @@ red=$(tput setaf 160)
 bold=$(tput bold)
 reset=$(tput sgr0)
 
-prompt_command() {
+set_prommpt_vars() {
   ERRMSG=$(parse_error)  # must be first line of the prompt_command function
   BRANCH=$(parse_git_branch)
   STAGED=$(parse_git_status_column 1 [A-Z])
   WORKING=$(parse_git_status_column 2 [A-Z])
   UNTRACKED=$(parse_git_status_column 1,2 ?)
   VIRT_ENV=$(parse_virtual_env)
-
-  PS1="\[$BOLD$CYAN\]$VIRT_ENV\[$YELLOW\]$BRANCH \[$BLUE\]\w\[$GREEN\]$STAGED\[$ORANGE\]$WORKING\[$PINK\]$UNTRACKED\[$RED\]$ERRMSG \[$RESET\]\$ "
 }
 
-PROMPT_COMMAND=prompt_command
+set_ps1() {
+  PS1="\[$BOLD$CYAN\]$VIRT_ENV\[$YELLOW\]$BRANCH \[$BLUE\]$WORK_DIR_CHAR\[$GREEN\]$STAGED\[$ORANGE\]$WORKING\[$PINK\]$UNTRACKED\[$RED\]$ERRMSG \[$RESET\]\$ "
+}
+
+set_long_prompt() {
+  set_prommpt_vars
+  WORK_DIR_CHAR=\\w
+  set_ps1
+}
+
+set_short_prompt() {
+  set_prommpt_vars
+  WORK_DIR_CHAR=\\W
+  set_ps1
+}
+
+alias long_prompt='PROMPT_COMMAND=set_long_prompt'
+alias short_prompt='PROMPT_COMMAND=set_short_prompt'
+
+long_prompt
