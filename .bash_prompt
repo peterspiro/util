@@ -61,7 +61,7 @@ parse_git_status_column () {
   git status --porcelain 2> /dev/null |cut -c$1|grep -c $2 |sed -E 's/^0$//; s/(.+)/ \1/'
 }
 parse_git_branch () {
-  git branch --no-color 2> /dev/null | grep '*' | sed "s/^*\(.*\)/\1/"
+  git branch --no-color 2> /dev/null | grep '*' | sed "s/^* \(.*\)/\1/"
 #  git branch --no-color 2> /dev/null | grep '*' | sed "s/^*\(.*\)/\1$(parse_git_dirty)/"
 }
 
@@ -71,7 +71,7 @@ parse_error () {
 }
 
 parse_virtual_env () {
-  [[ $VIRTUAL_ENV != '' ]] && echo "$(basename $VIRTUAL_ENV | sed 's/.*_//') "
+  [[ $VIRTUAL_ENV != '' ]] && echo "$(basename $VIRTUAL_ENV) "
 }
 
 #green=$(tput setaf 2)
@@ -112,7 +112,7 @@ prompt_command() {
 
 # PS1="\[$green$bold\]\h\[$reset\]:\[$blue$bold\]\w\[$reset\]\$ "
 
-  PS1="\[$BOLD$CYAN\]$VIRT_ENV\[$BLUE\]\w\[$YELLOW\]$BRANCH\[$GREEN\]$STAGED\[$ORANGE\]$WORKING\[$PINK\]$UNTRACKED\[$RED\]$ERRMSG \[$RESET\]\$ "
+  PS1="\[$BOLD$CYAN\]$VIRT_ENV\[$YELLOW\]$BRANCH \[$BLUE\]\w\[$GREEN\]$STAGED\[$ORANGE\]$WORKING\[$PINK\]$UNTRACKED\[$RED\]$ERRMSG \[$RESET\]\$ "
 #   PS1="\[$bold$cyan\]$VIRT_ENV\[$blue\]\w\[$yellow\]$BRANCH\[$green\]$STAGED\[$orange\]$WORKING\[$violet\]$UNTRACKED\[$red\]$ERRMSG \[$reset\]\$ "
 
 #  PS1="\[$cyan$bold\]$VIRT_ENV\[$blue\]\w\[$yellow\]$BRANCH\[$green\]$STAGED\[$orange\]$WORKING\[$violet\]$UNTRACKED\[$red\]$ERRMSG \[$reset\]\$ "
