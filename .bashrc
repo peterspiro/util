@@ -302,3 +302,12 @@ fi
 alias ut='ssh spiro@xserver.math.utah.edu'
 
 alias diff='git diff --no-index'
+
+alias s3lb='aws s3 ls'
+
+function s3grep() {
+    aws s3 ls s3://$1 --recursive | grep $2
+}
+
+
+alias ppath='export PYTHONPATH=.'

@@ -61,10 +61,15 @@
     dcw = diff --cached --word-diff
     lgc = log -p --word-diff-regex=.
     lgw = log -p --word-diff
+    sh = show HEAD
 
 # if you use less as default pager just type -S while viewing the diff to reenable wrapping in less
 
 # http://stackoverflow.com/questions/5188320/how-can-i-get-a-list-of-git-branches-ordered-by-most-recent-commit
     brecent = for-each-ref --count=20 --sort=-committerdate refs/heads/ --format='%(committerdate:short)    %(author)%09%09%(refname:short)'
     rbrecent = for-each-ref --count=20 --sort=-committerdate refs/remotes/ --format='%(committerdate:short)    %(author)%09%09%(refname:short)'
+
+# http://blog.kfish.org/2010/04/git-lola.html
+    lol = log --graph --decorate --pretty=oneline --abbrev-commit
+    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
 

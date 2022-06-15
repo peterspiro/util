@@ -61,7 +61,7 @@ parse_git_status_column () {
   git status --porcelain 2> /dev/null |cut -c$1|grep -c $2 |sed -E 's/^0$//; s/(.+)/ \1/'
 }
 parse_git_branch () {
-  git branch --no-color 2> /dev/null | grep '*' | sed "s/^*\(.*\)/\1/"
+  git branch --no-color 2> /dev/null | grep '*' | sed "s/^* \(.*\)/\1/"
 #  git branch --no-color 2> /dev/null | grep '*' | sed "s/^*\(.*\)/\1$(parse_git_dirty)/"
 }
 
@@ -71,7 +71,7 @@ parse_error () {
 }
 
 parse_virtual_env () {
-  [[ $VIRTUAL_ENV != '' ]] && echo "$(basename $VIRTUAL_ENV | sed 's/.*_//') "
+  [[ $VIRTUAL_ENV != '' ]] && echo "$(basename $VIRTUAL_ENV) "
 }
 
 #green=$(tput setaf 2)
@@ -91,31 +91,32 @@ red=$(tput setaf 160)
 bold=$(tput bold)
 reset=$(tput sgr0)
 
-prompt_command() {
+set_prommpt_vars() {
   ERRMSG=$(parse_error)  # must be first line of the prompt_command function
   BRANCH=$(parse_git_branch)
   STAGED=$(parse_git_status_column 1 [A-Z])
   WORKING=$(parse_git_status_column 2 [A-Z])
   UNTRACKED=$(parse_git_status_column 1,2 ?)
   VIRT_ENV=$(parse_virtual_env)
-#  PS1="\[$BOLD\]$VIRT_ENV\w$BRANCH$ERRMSG \[$RESET\]\$ "
-#  PS1="$VIRT_ENV\w$BRANCH$ERRMSG \$ "
-
-##  PS1="\[$BOLD$CYAN\]$VIRT_ENV\[$BLUE\]\w\[$BASE0$YELLOW\]$BRANCH\[$BASE$GREEN\]$STAGED\[$BASE$ORANGE\]$WORKING\[$BASE$PURPLE\]$UNTRACKED\[$BASE0$RED\]$ERRMSG\[$BASE0\] \[$RESET\]\$ "
-
-#  PS1="\[$BOLD$CYAN\]$VIRT_ENV\[$BLUE\]\w\[$YELLOW\]$BRANCH\[$BASE$GREEN\]$STAGED\[$BASE$ORANGE\]$WORKING\[$BASE$PURPLE\]$UNTRACKED\[$RED\]$ERRMSG \[$RESET\]\$ "
-
-##  PS1="\[\]$VIRT_ENV\[\]\w\[\]$BRANCH\[\]$STAGED\[\]$WORKING\[$BASE$PURPLE\]$UNTRACKED\[$BASE0$RED\]$ERRMSG\[$BASE0\] \[$RESET\]\$ "
-#  PS1="\[${BOLD}\]\[$CYAN\]$VIRT_ENV\[$BLUE\]\w\[$BASE0\]\[$YELLOW\]$BRANCH\[$BASE0\]\[$RED\]$ERRMSG\[$BASE0\] \[$RESET\]\$ "
-#  PS1="\[${BOLD}\]\[$BLUE\]\w\[$BASE0\]\[$YELLOW\]$BRANCH\[$BASE0\]\[$RED\]$ERRMSG\[$BASE0\] \[$RESET\]\$ "
-#  PS1="\[${BOLD}\]\[$CYAN\]\h \[$BLUE\]\w\[$BASE0\]\[$YELLOW\]\$(parse_git_branch)\[$BASE0\]\[$RED\]$ERRMSG\[$BASE0\] \[$RESET\]\$ "
-
-# PS1="\[$green$bold\]\h\[$reset\]:\[$blue$bold\]\w\[$reset\]\$ "
-
-  PS1="\[$BOLD$CYAN\]$VIRT_ENV\[$BLUE\]\w\[$YELLOW\]$BRANCH\[$GREEN\]$STAGED\[$ORANGE\]$WORKING\[$PINK\]$UNTRACKED\[$RED\]$ERRMSG \[$RESET\]\$ "
-#   PS1="\[$bold$cyan\]$VIRT_ENV\[$blue\]\w\[$yellow\]$BRANCH\[$green\]$STAGED\[$orange\]$WORKING\[$violet\]$UNTRACKED\[$red\]$ERRMSG \[$reset\]\$ "
-
-#  PS1="\[$cyan$bold\]$VIRT_ENV\[$blue\]\w\[$yellow\]$BRANCH\[$green\]$STAGED\[$orange\]$WORKING\[$violet\]$UNTRACKED\[$red\]$ERRMSG \[$reset\]\$ "
 }
 
-PROMPT_COMMAND=prompt_command
+set_ps1() {
+  PS1="\[$BOLD$CYAN\]$VIRT_ENV\[$YELLOW\]$BRANCH \[$BLUE\]$WORK_DIR_CHAR\[$GREEN\]$STAGED\[$ORANGE\]$WORKING\[$PINK\]$UNTRACKED\[$RED\]$ERRMSG \[$RESET\]\$ "
+}
+
+set_long_prompt() {
+  set_prommpt_vars
+  WORK_DIR_CHAR=\\w
+  set_ps1
+}
+
+set_short_prompt() {
+  set_prommpt_vars
+  WORK_DIR_CHAR=\\W
+  set_ps1
+}
+
+alias long_prompt='PROMPT_COMMAND=set_long_prompt'
+alias short_prompt='PROMPT_COMMAND=set_short_prompt'
+
+long_prompt

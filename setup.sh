@@ -1,9 +1,16 @@
-#!/usr/bin/env bash
+# Run with:
+# 	bash setup.sh
+
+set -x
+set -e
+
 
 UTIL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 
-files=(".gitignore_global" ".vip" ".emacs" ".bash_profile" ".bash_prompt")
+cp .bash_profile ~
+
+files=(".gitignore_global" ".vip" ".emacs" ".bash_prompt")
 for f in "${files[@]}"
 do
     ln -s $UTIL_DIR/$f ~
@@ -17,3 +24,6 @@ cd $UTIL_DIR
 
 git config user.email peterspiro@users.noreply.github.com
 git config user.name "Peter Spiro"
+
+
+chsh -s /bin/bash
