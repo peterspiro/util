@@ -75,3 +75,4 @@
 
     p = pull --ff-only
 
+    mt = mergetool --tool=opendiff
