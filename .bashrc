@@ -311,3 +311,6 @@ function s3grep() {
 
 
 alias ppath='export PYTHONPATH=.'
+
+alias tfplanless='terraform plan -no-color | less'
+alias tfplanrefresh='terraform plan -refresh-only'
