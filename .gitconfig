@@ -76,3 +76,5 @@
     p = pull --ff-only
 
     mt = mergetool --tool=opendiff
+
+    tracking = rev-parse --abbrev-ref --symbolic-full-name @{u}
