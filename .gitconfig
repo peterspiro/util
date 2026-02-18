@@ -78,3 +78,5 @@
     mt = mergetool --tool=opendiff
 
     tracking = rev-parse --abbrev-ref --symbolic-full-name @{u}
+
+    aliases = config --get-regexp ^alias
