@@ -2,7 +2,6 @@
         ui = auto
 [core]
         autocrlf = false
-        editor = emacs
         quotepath = false
         excludesfile = ~/.gitignore_global
 [merge]
