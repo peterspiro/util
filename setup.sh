@@ -28,4 +28,6 @@ git config user.email peterspiro@users.noreply.github.com
 git config user.name "Peter Spiro"
 
 
-chsh -s /bin/bash
+if [[ "$SHELL" != "/bin/bash" ]]; then
+  chsh -s /bin/bash
+fi
