@@ -10,11 +10,11 @@ UTIL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 cp .bash_profile ~
 
-files=(".gitignore_global" ".gvimrc" ".bash_prompt")
-for f in "${files[@]}"
-do
-  if [[ ! -f ~/$f ]]; then
-    ln -s $UTIL_DIR/$f ~
+shopt -s dotglob
+for path in dotfiles/*; do
+  base=$(basename "$path")
+  if [[ ! -f ~/$base ]]; then
+    ln -s $UTIL_DIR/$path ~
   fi
 done
 
