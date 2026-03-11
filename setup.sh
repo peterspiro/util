@@ -10,7 +10,7 @@ UTIL_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 cp .bash_profile ~
 
-files=(".gitignore_global" ".vip" ".emacs" ".bash_prompt")
+files=(".gitignore_global" ".bash_prompt")
 for f in "${files[@]}"
 do
     ln -s $UTIL_DIR/$f ~
