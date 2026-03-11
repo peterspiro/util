@@ -13,7 +13,9 @@ cp .bash_profile ~
 files=(".gitignore_global" ".gvimrc" ".bash_prompt")
 for f in "${files[@]}"
 do
+  if [[ ! -f ~/$f ]]; then
     ln -s $UTIL_DIR/$f ~
+  fi
 done
 
 
