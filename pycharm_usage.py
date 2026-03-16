@@ -15,7 +15,7 @@ from datetime import datetime, timedelta, date
 
 
 # ---------------------------------------------------------------------------
-# ANSI colours
+# ANSI colors
 # ---------------------------------------------------------------------------
 RESET  = "\033[0m"
 BOLD   = "\033[1m"
@@ -199,17 +199,17 @@ def bucket_lines(parsed_lines, target_date_str, period_mins=15):
 
 
 # ---------------------------------------------------------------------------
-# 6. Top N activity labels in a bucket, colour-coded by classification
+# 6. Top N activity labels in a bucket, color-coded by classification
 # ---------------------------------------------------------------------------
-ACTIVITY_COLOUR = {
+ACTIVITY_COLOR = {
     "uncategorized": "\033[32m",   # green
     "auto":          "\033[90m",   # dark grey
 }
 
 def top_activities(lines, n=3):
     """
-    Returns ANSI-coloured "Label (count)" strings, sorted by count descending.
-    Each label is coloured by the dominant classification of its lines.
+    Returns ANSI-colored "Label (count)" strings, sorted by count descending.
+    Each label is colored by the dominant classification of its lines.
     Pass n=None to return all distinct components.
     """
     counts     = defaultdict(int)
@@ -228,8 +228,8 @@ def top_activities(lines, n=3):
     result = []
     for label, total in ranked:
         dominant_cls = max(cls_counts[label], key=cls_counts[label].get)
-        colour = ACTIVITY_COLOUR[dominant_cls]
-        result.append(f"{colour}{label} ({total}){RESET}")
+        color = ACTIVITY_COLOR[dominant_cls]
+        result.append(f"{color}{label} ({total}){RESET}")
     return result
 
 
@@ -291,14 +291,14 @@ def render_table(buckets, target_date_str, all_components=False,
         acts = top_activities(lines, n=None if all_components else 3)
 
         # Green if period meets user-active threshold, dim otherwise.
-        row_colour = GREEN if is_user_active else DIM
+        row_color = GREEN if is_user_active else DIM
 
-        # Fixed columns (coloured by row_colour); auto value always grey;
-        # activities use their own colours.
+        # Fixed columns (colored by row_color); auto value always grey;
+        # activities use their own colors.
         fixed = (
             f"{time_range:<{W_TIME}}|"
             f"{uncat:>{W_UNCAT}}|"
-            f"{DARK_GREY}{auto:>{W_AUTO}}{RESET}{row_colour}|"
+            f"{DARK_GREY}{auto:>{W_AUTO}}{RESET}{row_color}|"
         )
         # Blank fixed prefix used for option-A continuation rows.
         blank_fixed = (
@@ -332,9 +332,9 @@ def render_table(buckets, target_date_str, all_components=False,
 
         for i, act_line in enumerate(lines_out):
             if i == 0:
-                print(row_colour + fixed + RESET + " " + act_line)
+                print(row_color + fixed + RESET + " " + act_line)
             else:
-                print(row_colour + blank_fixed + RESET + " " + act_line)
+                print(row_color + blank_fixed + RESET + " " + act_line)
 
     print(divider)
 
@@ -378,7 +378,7 @@ def render_table(buckets, target_date_str, all_components=False,
     else:
         duration_str = f"{user_hours}h {user_minutes}m"
 
-    print(f"  {BOLD}Date analysed :{RESET}  {target_date_str}  ({day_label})")
+    print(f"  {BOLD}Date analyzed :{RESET}  {target_date_str}  ({day_label})")
     print(f"  {BOLD}Threshold     :{RESET}  {threshold} uncategorized lines  "
           f"(period = {period_mins} min)")
     print(f"  {BOLD}Active periods:{RESET}  {user_active_buckets} × {period_mins}-min periods "
