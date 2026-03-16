@@ -161,18 +161,15 @@ def classify_component(component):
 # ---------------------------------------------------------------------------
 # 4. Extract a short readable label from the component string
 # ---------------------------------------------------------------------------
-def short_label(component):
+def short_label(component, truncate=True):
     """
     '#com.intellij.openapi.project.impl.ProjectManagerImpl'
-    → 'ProjectManagerImpl'
+    → 'ProjectManagerImpl' (or untruncated last segment when truncate=False)
     """
-    # Strip leading hash/hash-hash
     c = component.lstrip("#")
-    # Take last dotted segment
     parts = c.split(".")
     label = parts[-1] if parts else c
-    # Trim to 28 chars
-    return label[:28]
+    return label[:28] if truncate else label
 
 
 # ---------------------------------------------------------------------------
@@ -206,17 +203,18 @@ ACTIVITY_COLOUR = {
     "auto":          "\033[90m",   # dark grey
 }
 
-def top_activities(lines, n=3):
+def top_activities(lines, n=3, truncate=True):
     """
     Returns ANSI-coloured "Label (count)" strings, sorted by count descending.
     Each label is coloured by the dominant classification of its lines.
     Pass n=None to return all distinct components.
+    Pass truncate=False to show full (untruncated) last-segment names.
     """
     counts     = defaultdict(int)
     cls_counts = defaultdict(lambda: defaultdict(int))
 
     for pl in lines:
-        label = short_label(pl["component"])
+        label = short_label(pl["component"], truncate=truncate)
         cls   = classify_component(pl["component"])
         counts[label] += 1
         cls_counts[label][cls] += 1
@@ -237,7 +235,7 @@ def top_activities(lines, n=3):
 # 7. Render the table
 # ---------------------------------------------------------------------------
 def render_table(buckets, target_date_str, all_components=False,
-                 user_only=False, threshold=10, period_mins=15):
+                 user_only=False, threshold=10, period_mins=15, no_truncate=False):
     if not buckets:
         print(f"{YELLOW}No log entries found for {target_date_str}.{RESET}")
         print("Check that PyCharm has been run and that log files are present.")
@@ -288,7 +286,8 @@ def render_table(buckets, target_date_str, all_components=False,
         end_m = end_m % 60
         time_range = f"{slot} - {end_h:02d}:{end_m:02d}"
 
-        acts = top_activities(lines, n=None if all_components else 3)
+        acts = top_activities(lines, n=None if all_components else 3,
+                              truncate=not no_truncate)
 
         # Green if period meets user-active threshold, dim otherwise.
         row_colour = GREEN if is_user_active else DIM
@@ -431,12 +430,17 @@ def main():
         dest="period_mins",
         help="period length in minutes (default: 15)",
     )
+    parser.add_argument(
+        "-n", "--no-truncate", action="store_true",
+        help="show full component names in Top Activities (default: truncate to 28 chars)",
+    )
 
     ns = parser.parse_args()
     all_components = ns.all_components
     user_only      = ns.user_only
     threshold      = ns.threshold
     period_mins    = ns.period_mins
+    no_truncate    = ns.no_truncate
 
     if ns.days_back < 0:
         parser.error("DAYS must be a non-negative integer.")
@@ -486,7 +490,8 @@ def main():
 
     buckets = bucket_lines(parsed_lines, target_date_str, period_mins=period_mins)
     render_table(buckets, target_date_str, all_components=all_components,
-                 user_only=user_only, threshold=threshold, period_mins=period_mins)
+                 user_only=user_only, threshold=threshold, period_mins=period_mins,
+                 no_truncate=no_truncate)
 
 
 if __name__ == "__main__":
