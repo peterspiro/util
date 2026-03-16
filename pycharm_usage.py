@@ -19,7 +19,8 @@ from datetime import datetime, timedelta, date
 # ---------------------------------------------------------------------------
 RESET  = "\033[0m"
 BOLD   = "\033[1m"
-DIM    = "\033[2m"
+DIM      = "\033[2m"
+DARK_GREY = "\033[90m"
 GREEN  = "\033[32m"
 YELLOW = "\033[33m"
 CYAN   = "\033[36m"
@@ -292,11 +293,12 @@ def render_table(buckets, target_date_str, all_components=False,
         # Green if period meets user-active threshold, dim otherwise.
         row_colour = GREEN if is_user_active else DIM
 
-        # Fixed columns (coloured by row_colour); activities use their own colours.
+        # Fixed columns (coloured by row_colour); auto value always grey;
+        # activities use their own colours.
         fixed = (
             f"{time_range:<{W_TIME}}|"
             f"{uncat:>{W_UNCAT}}|"
-            f"{auto:>{W_AUTO}}|"
+            f"{DARK_GREY}{auto:>{W_AUTO}}{RESET}{row_colour}|"
         )
         # Blank fixed prefix used for option-A continuation rows.
         blank_fixed = (
