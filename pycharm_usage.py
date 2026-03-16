@@ -57,6 +57,9 @@ AUTO_COMPONENTS = {
     "JunieActivationStateListener",
     "GrazieJbaAuthStepKt",
     "JunieGrazieLLMProxy",
+    "DragAndDropCoordinator$Companion",
+    "PerformanceWatcherImpl",
+    "JVMResponsivenessMonitor",
 }
 
 
