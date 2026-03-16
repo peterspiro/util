@@ -202,8 +202,8 @@ def bucket_lines(parsed_lines, target_date_str, period_mins=15):
 # 6. Top N activity labels in a bucket, colour-coded by classification
 # ---------------------------------------------------------------------------
 ACTIVITY_COLOUR = {
-    "uncategorized": "\033[90m",   # dark grey
-    "auto":          "\033[37m",   # white
+    "uncategorized": "\033[32m",   # green
+    "auto":          "\033[90m",   # dark grey
 }
 
 def top_activities(lines, n=3):
