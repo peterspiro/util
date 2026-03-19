@@ -68,35 +68,47 @@ AUTO_COMPONENTS = {
 # 1. Locate log files
 # ---------------------------------------------------------------------------
 def find_log_files():
-    """Return a list of idea.log* paths, newest rotation first."""
+    """Return a list of idea.log* / idea.*.log paths, newest rotation first."""
     system = platform.system()
+
+    def globs_for(directory):
+        """Both naming conventions: idea.log* and idea.*.log"""
+        return (
+            glob.glob(os.path.join(directory, "idea.log*")) +
+            glob.glob(os.path.join(directory, "idea.*.log"))
+        )
 
     candidates = []
 
     if system == "Darwin":
         base = os.path.expanduser("~/Library/Logs/JetBrains")
-        candidates += glob.glob(os.path.join(base, "PyCharm*", "idea.log*"))
-        candidates += glob.glob(os.path.join(base, "PyCharm*", "log", "idea.log*"))
+        for d in glob.glob(os.path.join(base, "PyCharm*")):
+            candidates += globs_for(d)
+            candidates += globs_for(os.path.join(d, "log"))
 
     elif system == "Linux":
         base = os.path.expanduser("~/.cache/JetBrains")
-        candidates += glob.glob(os.path.join(base, "PyCharm*", "log", "idea.log*"))
+        for d in glob.glob(os.path.join(base, "PyCharm*")):
+            candidates += globs_for(os.path.join(d, "log"))
         # Older layout
         base2 = os.path.expanduser("~/.local/share/JetBrains")
-        candidates += glob.glob(os.path.join(base2, "PyCharm*", "log", "idea.log*"))
+        for d in glob.glob(os.path.join(base2, "PyCharm*")):
+            candidates += globs_for(os.path.join(d, "log"))
 
     elif system == "Windows":
         appdata = os.environ.get("APPDATA", "")
         base = os.path.join(appdata, "JetBrains")
-        candidates += glob.glob(os.path.join(base, "PyCharm*", "log", "idea.log*"))
+        for d in glob.glob(os.path.join(base, "PyCharm*")):
+            candidates += globs_for(os.path.join(d, "log"))
 
     # Also check the current directory (useful for testing)
-    candidates += glob.glob("idea.log*")
+    candidates += globs_for(".")
 
     if not candidates:
         return []
 
-    # Deduplicate and sort: idea.log first, then idea.log.1, idea.log.2 …
+    # Deduplicate and sort: idea.log first, then rotations in ascending order
+    # Handles both idea.log.N and idea.N.log naming conventions.
     seen = set()
     unique = []
     for p in candidates:
@@ -109,8 +121,15 @@ def find_log_files():
         name = os.path.basename(p)
         if name == "idea.log":
             return (0, 0)
+        # idea.log.N  (e.g. idea.log.1)
         m = re.search(r'\.(\d+)$', name)
-        return (1, int(m.group(1))) if m else (2, 0)
+        if m:
+            return (1, int(m.group(1)))
+        # idea.N.log  (e.g. idea.1.log)
+        m = re.search(r'idea\.(\d+)\.log$', name)
+        if m:
+            return (1, int(m.group(1)))
+        return (2, 0)
 
     unique.sort(key=sort_key)
     return unique
