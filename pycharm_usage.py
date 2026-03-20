@@ -204,14 +204,19 @@ def bucket_key(time_str, period_mins=15):
     return f"{int(h):02d}:{bucket_m:02d}"
 
 
-def bucket_lines(parsed_lines, target_date_str, period_mins=15):
+def bucket_lines(parsed_lines, target_date_str, period_mins=15, since_time=None):
     """
     Group parsed lines by period bucket for target_date_str ('YYYY-MM-DD').
+    If since_time is given, lines earlier than that time are excluded.
     Returns dict: bucket_key → list of parsed line dicts.
     """
     buckets = defaultdict(list)
     for pl in parsed_lines:
         if pl["date"] == target_date_str:
+            if since_time is not None:
+                line_time = datetime.strptime(pl["time"], "%H:%M:%S").time()
+                if line_time < since_time:
+                    continue
             key = bucket_key(pl["time"], period_mins)
             buckets[key].append(pl)
     return buckets
@@ -256,7 +261,7 @@ def top_activities(lines, n=3):
 # 7. Render the table
 # ---------------------------------------------------------------------------
 def render_table(buckets, target_date_str, all_components=False,
-                 user_only=False, threshold=10, period_mins=15):
+                 user_only=False, threshold=10, period_mins=15, since_time=None):
     if not buckets:
         print(f"{YELLOW}No log entries found for {target_date_str}.{RESET}")
         print("Check that PyCharm has been run and that log files are present.")
@@ -398,6 +403,8 @@ def render_table(buckets, target_date_str, all_components=False,
         duration_str = f"{user_hours}h {user_minutes}m"
 
     print(f"  {BOLD}Date analyzed :{RESET}  {target_date_str}  ({day_label})")
+    if since_time is not None:
+        print(f"  {BOLD}Since         :{RESET}  {since_time.strftime('%H:%M')}")
     print(f"  {BOLD}Threshold     :{RESET}  {threshold} uncategorized lines  "
           f"(period = {period_mins} min)")
     print(f"  {BOLD}Active periods:{RESET}  {user_active_buckets} × {period_mins}-min periods "
@@ -423,6 +430,16 @@ def positive_int(value):
         return v
     except ValueError:
         raise argparse.ArgumentTypeError(f"must be a positive integer, got: {value!r}")
+
+
+def parse_time(value):
+    """argparse type that accepts HH or HH:MM (24-hour) and returns a datetime.time."""
+    for fmt in ("%H:%M", "%H"):
+        try:
+            return datetime.strptime(value, fmt).time()
+        except ValueError:
+            continue
+    raise argparse.ArgumentTypeError(f"must be HH or HH:MM (24-hour format), got: {value!r}")
 
 
 def main():
@@ -451,11 +468,16 @@ def main():
         dest="period_mins",
         help="period length in minutes (default: 15)",
     )
+    parser.add_argument(
+        "-s", "--since-time", type=parse_time, default=None, metavar="HH[:MM]",
+        help="only include log lines at or after this time of day (24-hour format)",
+    )
     ns = parser.parse_args()
     all_components = ns.all_components
     user_only      = ns.user_only
     threshold      = ns.threshold
     period_mins    = ns.period_mins
+    since_time     = ns.since_time
 
     if ns.days_back < 0:
         parser.error("DAYS must be a non-negative integer.")
@@ -503,9 +525,11 @@ def main():
     # Clear the scanning message
     print(" " * 60, end="\r")
 
-    buckets = bucket_lines(parsed_lines, target_date_str, period_mins=period_mins)
+    buckets = bucket_lines(parsed_lines, target_date_str, period_mins=period_mins,
+                          since_time=since_time)
     render_table(buckets, target_date_str, all_components=all_components,
-                 user_only=user_only, threshold=threshold, period_mins=period_mins)
+                 user_only=user_only, threshold=threshold, period_mins=period_mins,
+                 since_time=since_time)
 
 
 if __name__ == "__main__":
